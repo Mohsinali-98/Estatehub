@@ -313,5 +313,227 @@ window.EstateHub={getProps,search,postForm,details};
   if(window.EstateHubDB?.enabled()) hydrateFromSupabase();
 })();
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+  /* =========================
+     SEARCH BUTTON
+     ========================= */
+  const allButtons = document.querySelectorAll("button, a");
+
+  allButtons.forEach(function (btn) {
+    const text = (btn.textContent || "").trim().toLowerCase();
+
+    if (text === "search" || text.includes("search")) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const inputs = document.querySelectorAll(
+          'input[type="text"], input[type="search"]'
+        );
+
+        let searchValue = "";
+
+        inputs.forEach(function (input) {
+          if (input.value.trim()) {
+            searchValue += " " + input.value.trim();
+          }
+        });
+
+        searchValue = searchValue.trim().toLowerCase();
+
+        if (!searchValue) {
+          alert("Please enter a location or property detail to search.");
+          return;
+        }
+
+        const cards = document.querySelectorAll(
+          ".property-card, .property-item, .listing-card, [data-property]"
+        );
+
+        let found = 0;
+
+        cards.forEach(function (card) {
+          const content = card.textContent.toLowerCase();
+
+          if (content.includes(searchValue)) {
+            card.style.display = "";
+            found++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        if (cards.length > 0 && found === 0) {
+          alert("No matching properties found.");
+        }
+      });
+    }
+  });
+
+
+  /* =========================
+     LOGIN BUTTON
+     ========================= */
+  allButtons.forEach(function (btn) {
+    const text = (btn.textContent || "").trim().toLowerCase();
+
+    if (text === "login" || text === "log in" || text.includes("login")) {
+
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        /* Create login popup */
+        const oldPopup = document.getElementById("estatehub-login-popup");
+        if (oldPopup) oldPopup.remove();
+
+        const popup = document.createElement("div");
+        popup.id = "estatehub-login-popup";
+
+        popup.innerHTML = `
+          <div style="
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.55);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index:99999;
+            padding:20px;
+          ">
+            <div style="
+              background:white;
+              width:100%;
+              max-width:400px;
+              border-radius:16px;
+              padding:25px;
+              box-shadow:0 10px 40px rgba(0,0,0,.25);
+            ">
+
+              <h2 style="margin-top:0;">Login to EstateHub</h2>
+
+              <input id="estatehub-email"
+                type="email"
+                placeholder="Email address"
+                style="
+                  width:100%;
+                  box-sizing:border-box;
+                  padding:12px;
+                  margin:8px 0;
+                  border:1px solid #ccc;
+                  border-radius:8px;
+                ">
+
+              <input id="estatehub-password"
+                type="password"
+                placeholder="Password"
+                style="
+                  width:100%;
+                  box-sizing:border-box;
+                  padding:12px;
+                  margin:8px 0 15px;
+                  border:1px solid #ccc;
+                  border-radius:8px;
+                ">
+
+              <button id="estatehub-login-submit"
+                style="
+                  width:100%;
+                  padding:13px;
+                  border:0;
+                  border-radius:8px;
+                  cursor:pointer;
+                  font-size:16px;
+                ">
+                Login
+              </button>
+
+              <button id="estatehub-login-close"
+                style="
+                  width:100%;
+                  padding:10px;
+                  margin-top:8px;
+                  border:0;
+                  background:#eee;
+                  border-radius:8px;
+                  cursor:pointer;
+                ">
+                Cancel
+              </button>
+
+              <p id="estatehub-login-message"
+                style="margin-bottom:0;font-size:14px;"></p>
+
+            </div>
+          </div>
+        `;
+
+        document.body.appendChild(popup);
+
+        document.getElementById("estatehub-login-close")
+          .addEventListener("click", function () {
+            popup.remove();
+          });
+
+        document.getElementById("estatehub-login-submit")
+          .addEventListener("click", async function () {
+
+            const email =
+              document.getElementById("estatehub-email").value.trim();
+
+            const password =
+              document.getElementById("estatehub-password").value;
+
+            const message =
+              document.getElementById("estatehub-login-message");
+
+            if (!email || !password) {
+              message.textContent = "Please enter email and password.";
+              return;
+            }
+
+            /*
+              Use existing Supabase client if available.
+            */
+            try {
+
+              let client = null;
+
+              if (window.supabaseClient) {
+                client = window.supabaseClient;
+              } else if (window.sb) {
+                client = window.sb;
+              }
+
+              if (!client) {
+                message.textContent =
+                  "Supabase login connection is not available.";
+                return;
+              }
+
+              const result = await client.auth.signInWithPassword({
+                email: email,
+                password: password
+              });
+
+              if (result.error) {
+                message.textContent = result.error.message;
+                return;
+              }
+
+              alert("Login successful!");
+              popup.remove();
+
+            } catch (error) {
+              message.textContent =
+                "Login failed. Please try again.";
+              console.error(error);
+            }
+          });
+      });
+    }
+  });
+
+});
+</script>
 </body></html>
