@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EstateHub Pakistan | Buy, Rent & Sell Property</title>
-<meta name="description" content="EstateHub Pakistan — a modern marketplace for buying, renting and selling property.">
+<title>Property360.pk | Buy, Rent & Sell Property in Pakistan</title>
+<meta name="description" content="Property360.pk — a modern marketplace for buying, renting and selling property across Pakistan.">
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,Arial,sans-serif;color:#0f172a;background:#f8fafc}
@@ -53,7 +53,7 @@ footer{background:#020617;color:#fff;padding:55px 0 20px}.foot{display:grid;grid
 </head>
 <body>
 <header><div class="wrap nav">
-<a class="logo" href="#">Estate<span>Hub</span></a>
+<a class="logo" href="#">Property<span>360</span></a>
 <nav class="links"><a href="#properties">Buy</a><a href="#properties">Rent</a><a href="#properties">Sell</a><a href="#categories">Commercial</a><a href="#societies">Projects</a><a href="#agents">Agents</a></nav>
 <div class="actions"><button class="btn ghost" id="savedBtn">♡ Saved</button><button class="btn ghost" id="loginBtn">Login</button><button class="btn green" id="postBtn">＋ Post Property</button></div>
 </div></header>
@@ -88,7 +88,7 @@ footer{background:#020617;color:#fff;padding:55px 0 20px}.foot{display:grid;grid
 <div class="soc"><div class="icon">⌂</div><div><strong>Gulberg Lahore</strong><span class="muted">305+ active listings</span></div></div>
 </div></div></section>
 
-<section id="categories"><div class="wrap"><div style="text-align:center"><div class="eyebrow">WHY ESTATEHUB</div><h2 class="heading">A simpler way to find property</h2></div><div class="why">
+<section id="categories"><div class="wrap"><div style="text-align:center"><div class="eyebrow">WHY PROPERTY360</div><h2 class="heading">A simpler way to find property</h2></div><div class="why">
 <div class="card"><div class="icon">✓</div><h3>Verified listings</h3><p>Discover property listings with clearer information and verification features.</p></div>
 <div class="card"><div class="icon">♙</div><h3>Direct connections</h3><p>Connect with owners, agents and property professionals in one place.</p></div>
 <div class="card"><div class="icon">⌂</div><h3>Every property type</h3><p>Houses, apartments, plots, commercial spaces and new projects.</p></div>
@@ -96,11 +96,11 @@ footer{background:#020617;color:#fff;padding:55px 0 20px}.foot{display:grid;grid
 </main>
 
 <footer><div class="wrap foot">
-<div><div class="logo">Estate<span>Hub</span></div><p>Pakistan's modern marketplace for buying, selling and renting property.</p></div>
+<div><div class="logo">Property<span>360</span></div><p>Pakistan's modern marketplace for buying, selling and renting property.</p></div>
 <div><strong>Explore</strong><ul><li>Buy Property</li><li>Rent Property</li><li>Sell Property</li><li>Commercial</li><li>New Projects</li></ul></div>
 <div><strong>Company</strong><ul><li>About us</li><li>Contact</li><li>Privacy policy</li><li>Terms</li></ul></div>
 <div><strong>Get started</strong><p>Have a property to sell or rent?</p><button class="btn green" id="postFooterBtn">Post your property</button></div>
-</div><div class="wrap copy">© 2026 EstateHub. All rights reserved.</div></footer>
+</div><div class="wrap copy">© 2026 Property360.pk. All rights reserved.</div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -119,8 +119,8 @@ if(window.supabase){
 (function(){
 "use strict";
 
-const KEY="estatehub_properties_v3";
-const SAVED="estatehub_saved_v3";
+const KEY="property360_properties_v1";
+const SAVED="property360_saved_v1";
 
 const seeded=[
 {id:"EH001",title:"Modern Family House",city:"Lahore",area:"DHA Phase 6",type:"House",purpose:"Buy",price:25000000,beds:4,baths:4,size:"1 Kanal",img:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80",desc:"Modern family house in a prime Lahore location."},
@@ -147,7 +147,7 @@ let x=modal(`<div class="modal-box">
 <div style="font-size:24px;font-weight:700">${money(p.price)}</div>
 <p>📍 ${escapeHtml(p.area||"")}, ${escapeHtml(p.city||"")}</p>
 <p>🏠 ${escapeHtml(p.size||"—")} &nbsp; 🛏 ${p.beds||0} Bedrooms &nbsp; 🛁 ${p.baths||0} Bathrooms</p>
-<p>${escapeHtml(p.desc||"Property listing on EstateHub.")}</p>
+<p>${escapeHtml(p.desc||"Property listing on Property360.")}</p>
 <button class="btn green" data-save>${saved.includes(p.id)?"♥ Saved":"♡ Save Property"}</button>
 </div>`);
 x.querySelector("[data-close]").onclick=()=>x.remove();
@@ -159,7 +159,7 @@ function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":
 function renderFeatured(list){
 const grid=document.getElementById("featuredGrid");if(!grid)return;
 grid.innerHTML=list.slice(0,6).map(p=>`<article class="card property-card" data-id="${p.id}">
-<div class="photo"><img src="${p.img||""}" alt=""><span class="badge">ESTATEHUB</span><button class="heart" data-heart>♡</button></div>
+<div class="photo"><img src="${p.img||""}" alt=""><span class="badge">PROPERTY360</span><button class="heart" data-heart>♡</button></div>
 <div class="body"><div class="price">${money(p.price)}</div><div class="title">${escapeHtml(p.title)}</div><div class="muted">📍 ${escapeHtml(p.area)}, ${escapeHtml(p.city)}</div>
 <div class="specs"><span>${escapeHtml(p.size||"—")}</span><span>🛏 ${p.beds||0} Beds</span><span>♨ ${p.baths||0} Baths</span></div></div></article>`).join("");
 grid.querySelectorAll("[data-id]").forEach(c=>c.addEventListener("click",()=>details(getProps().find(p=>String(p.id)===String(c.dataset.id)))));
@@ -253,8 +253,8 @@ x.remove();renderFeatured(getProps());toast("Property published successfully");r
 
 async function loginModal(){
 let x=modal(`<div class="modal-box" style="max-width:430px">
-<button class="close" data-close>×</button><h2>EstateHub Login</h2>
-<p style="color:#64748b">Login or create your EstateHub account.</p>
+<button class="close" data-close>×</button><h2>Property360 Login</h2>
+<p style="color:#64748b">Login or create your Property360 account.</p>
 <form id="eh-auth" style="display:grid;gap:11px">
 <input name="email" type="email" required placeholder="Email address">
 <input name="password" type="password" required minlength="6" placeholder="Password (6+ characters)">
@@ -280,7 +280,72 @@ document.getElementById("searchBtn").onclick=search;
 document.getElementById("loginBtn").onclick=loginModal;
 document.getElementById("postBtn").onclick=postForm;
 document.getElementById("postFooterBtn").onclick=postForm;
-document.getElementById("savedBtn").onclick=()=>{let ids=getSaved();results(getProps().filter(p=>ids.includes(p.id)),"Saved Properties")};
+
+document.getElementById("savedBtn").onclick=()=>{
+  let ids=getSaved();
+  results(getProps().filter(p=>ids.includes(p.id)),"Saved Properties");
+};
+
+document.getElementById("eh-location")?.addEventListener("keydown",e=>{if(e.key==="Enter")search()});
+
+function currentSession(){
+  try{return window.ehSupabase ? window.ehSupabase.auth.getSession() : Promise.resolve({data:{session:null}})}
+  catch(e){return Promise.resolve({data:{session:null}})}
+}
+
+async function refreshAuthUI(){
+  const loginBtn=document.getElementById("loginBtn");
+  if(!loginBtn || !window.ehSupabase)return;
+  try{
+    const {data}=await window.ehSupabase.auth.getSession();
+    if(data?.session){
+      loginBtn.textContent="Account";
+      loginBtn.onclick=async()=>{
+        const {error}=await window.ehSupabase.auth.signOut();
+        if(error) toast(error.message);
+        else {loginBtn.textContent="Login";loginBtn.onclick=loginModal;toast("Logged out");}
+      };
+    }else{
+      loginBtn.textContent="Login";
+      loginBtn.onclick=loginModal;
+    }
+  }catch(e){}
+}
+
+if(window.ehSupabase){
+  window.ehSupabase.auth.onAuthStateChange(()=>refreshAuthUI());
+  refreshAuthUI();
+}
+
+/* If a listing has an owner phone/whatsapp field, show a contact action.
+   Otherwise the existing detail modal remains fully usable. */
+const oldDetails=details;
+details=function(p){
+  if(!p)return;
+  const saved=getSaved();
+  let x=modal(`<div class="modal-box">
+    <button class="close" data-close>×</button>
+    <img src="${p.img||""}" alt="Property" style="width:100%;height:300px;object-fit:cover;border-radius:14px">
+    <div style="font-size:13px;color:#777;margin-top:16px">${escapeHtml(p.purpose||"")} • ${escapeHtml(p.type||"")}</div>
+    <h2>${escapeHtml(p.title||"Property")}</h2>
+    <div style="font-size:24px;font-weight:700">${money(p.price)}</div>
+    <p>📍 ${escapeHtml(p.area||"")}, ${escapeHtml(p.city||"")}</p>
+    <p>🏠 ${escapeHtml(p.size||"—")} &nbsp; 🛏 ${p.beds||0} Bedrooms &nbsp; 🛁 ${p.baths||0} Bathrooms</p>
+    <p>${escapeHtml(p.desc||"Property listing on Property360.")}</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn green" data-save>${saved.includes(p.id)?"♥ Saved":"♡ Save Property"}</button>
+      ${p.whatsapp||p.phone?`<a class="btn green" target="_blank" rel="noopener" href="${p.whatsapp?`https://wa.me/${String(p.whatsapp).replace(/[^0-9]/g,"")}`:`tel:${escapeHtml(p.phone)}`}">${p.whatsapp?"WhatsApp":"Call"}</a>`:""}
+    </div>
+  </div>`);
+  x.querySelector("[data-close]").onclick=()=>x.remove();
+  x.querySelector("[data-save]").onclick=()=>{
+    let a=getSaved();
+    if(a.includes(p.id))a=a.filter(i=>i!==p.id);else a.push(p.id);
+    localStorage.setItem(SAVED,JSON.stringify(a));
+    x.remove();toast("Saved properties updated");
+  };
+};
+
 
 if(!localStorage.getItem(KEY))setProps(seeded);
 renderFeatured(getProps());
@@ -291,7 +356,7 @@ if(!error&&data&&data.length){setProps(data);renderFeatured(data)}
 });
 }
 
-window.EstateHub={getProps,search,postForm,details};
+window.Property360={getProps,search,postForm,details};
 })();
 </script>
 </body>
